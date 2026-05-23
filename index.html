@@ -267,6 +267,10 @@
             font-family: 'Playfair Display', serif;
         }
 
+        .hide {
+            display: none !important;
+        }
+
         .book-info {
             flex: 1;
             display: flex;
@@ -538,7 +542,8 @@
                 <div class="book-card" id="card-${book.olKey.replace(/\//g, '-')}">
                     <div class="cover-wrapper">
                         ${book.cover 
-                            ? `<img src="${coverUrl(book.cover)}" class="cover-img" alt="${book.title}" onerror="this.outerHTML='${placeholderSvg(book.title)}'">`
+                            ? `<img src="${coverUrl(book.cover)}" class="cover-img" alt="${book.title}" onerror="this.classList.add('hide'); this.nextElementSibling.classList.remove('hide')">
+                               <div class="placeholder-cover hide">${book.title ? book.title.charAt(0).toUpperCase() : '?'}</div>`
                             : placeholderSvg(book.title)
                         }
                     </div>
