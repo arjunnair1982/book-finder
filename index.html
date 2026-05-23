@@ -607,8 +607,10 @@
                 
                 loadList(); // Sync with server for full state
             } catch (err) {
-                console.error("Error saving book:", err);
-                showToast("Error saving book. Make sure Firebase is configured.");
+                console.error("Firebase Error:", err);
+                // Show more detailed error if possible
+                const errorMsg = err.code ? `Firebase Error: ${err.code}` : "Error saving book. Check console.";
+                showToast(errorMsg);
                 if (btn) {
                     btn.disabled = false;
                     btn.textContent = 'Save';
