@@ -271,8 +271,9 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             min-width: 0;
+            padding-right: 80px; /* Space for the top-right button */
         }
 
         .book-title {
@@ -285,12 +286,13 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             line-height: 1.2;
+            color: var(--text-main);
         }
 
         .book-author {
             font-size: 14px;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -299,11 +301,12 @@
         .book-meta {
             font-size: 12px;
             color: var(--text-muted);
-            margin-bottom: auto;
         }
 
         .actions {
-            margin-top: 12px;
+            position: absolute;
+            top: 12px;
+            right: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -313,30 +316,33 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 6px 16px;
+            padding: 6px 14px;
             border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
         }
 
         .btn-save:disabled {
             background: #e2e8f0;
             color: var(--text-muted);
             cursor: default;
+            box-shadow: none;
         }
 
         .status-pill {
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             cursor: pointer;
             border: none;
             transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
         }
 
         .status-want {
@@ -351,8 +357,8 @@
 
         .btn-remove {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            bottom: 12px;
+            right: 12px;
             width: 24px;
             height: 24px;
             border-radius: 50%;
@@ -363,7 +369,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             transition: all 0.2s;
         }
 
@@ -540,16 +546,16 @@
                         <div class="book-title">${book.title}</div>
                         <div class="book-author">${book.author || 'Unknown Author'}</div>
                         <div class="book-meta">${book.year || ''}</div>
-                        <div class="actions">
-                            ${isSavedView 
-                                ? `<button class="status-pill ${statusClass}" onclick="window._toggleStatus('${book.id}', '${status}')">${statusLabel}</button>`
-                                : `<button class="btn-save" ${isSaved ? 'disabled' : ''} onclick="window._saveBook('${book.olKey}')">
-                                    ${isSaved ? 'Saved ✓' : 'Save'}
-                                   </button>`
-                            }
-                        </div>
                     </div>
-                    ${isSavedView ? `<button class="btn-remove" onclick="window._removeBook('${book.id}')">✕</button>` : ''}
+                    <div class="actions">
+                        ${isSavedView 
+                            ? `<button class="status-pill ${statusClass}" onclick="window._toggleStatus('${book.id}', '${status}')">${statusLabel}</button>`
+                            : `<button class="btn-save" ${isSaved ? 'disabled' : ''} onclick="window._saveBook('${book.olKey}')">
+                                ${isSaved ? 'Saved ✓' : 'Save'}
+                               </button>`
+                        }
+                    </div>
+                    ${isSavedView ? `<button class="btn-remove" onclick="window._removeBook('${book.id}')" title="Remove book">✕</button>` : ''}
                 </div>
             `;
         };
