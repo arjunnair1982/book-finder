@@ -538,13 +538,17 @@
             const statusLabel = status === 'read' ? 'Read ✓' : 'Want to Read';
             const statusClass = status === 'read' ? 'status-read' : 'status-want';
 
+            // Sanitize title for alt text to prevent quote breakage
+            const safeTitle = (book.title || '').replace(/"/g, '&quot;');
+            const initial = book.title ? book.title.charAt(0).toUpperCase() : '?';
+
             return `
                 <div class="book-card" id="card-${book.olKey.replace(/\//g, '-')}">
                     <div class="cover-wrapper">
                         ${book.cover 
-                            ? `<img src="${coverUrl(book.cover)}" class="cover-img" alt="${book.title}" onerror="this.classList.add('hide'); this.nextElementSibling.classList.remove('hide')">
-                               <div class="placeholder-cover hide">${book.title ? book.title.charAt(0).toUpperCase() : '?'}</div>`
-                            : placeholderSvg(book.title)
+                            ? `<img src="${coverUrl(book.cover)}" class="cover-img" alt="${safeTitle}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                               <div class="placeholder-cover" style="display:none">${initial}</div>`
+                            : `<div class="placeholder-cover">${initial}</div>`
                         }
                     </div>
                     <div class="book-info">
